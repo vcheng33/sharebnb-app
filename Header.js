@@ -2,28 +2,33 @@ import React from 'react';
 
 import {
     StyleSheet,
-    Text,
     View,
-    SafeAreaView,
-    Button
+    Image,
 } from 'react-native';
 
-function Header(){
-    return(
+function Header() {
+    return (
         <View style={styles.title}>
-            <Text style={{ fontSize: 30 }}>Welcome to</Text>
-            <Text style={{ fontSize: 30, marginBottom: 10 }}>Share B&B</Text>
+            <Image 
+                source={require('./assets/logo.png')}
+                style={styles.logo}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     title: {
-        // flex: 1,
-        // backgroundColor: '#fff',
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-
+        justifyContent: 'flex-end',
+    },
+    logo: {
+        padding: 20,
+        backgroundColor: 'rgba(263,263,263,0.2)',
+        width: 275,
+        height: 165,
+        borderRadius: 5,
     },
 })
 

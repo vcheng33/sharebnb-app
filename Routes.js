@@ -6,6 +6,9 @@ import Homepage from './Homepage';
 import Listings from "./Listings";
 import Listing from "./Listing";
 import ListingCard from './ListingCard';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
+import NewListingForm from './NewListingForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +50,21 @@ function Routes() {
                 <Stack.Screen
                     name="ListingCard"
                     component={ListingCard}
+                />
+
+                <Stack.Screen
+                    name="AddListing"
+                    component={NewListingForm}
+                />
+
+                <Stack.Screen
+                    name="Login"
+                    component={LoginForm}
+                />
+
+                <Stack.Screen
+                    name="SignUp"
+                    component={SignUpForm}
                 />
             </Stack.Navigator>
         </NavigationContainer>

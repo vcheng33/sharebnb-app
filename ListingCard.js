@@ -17,9 +17,9 @@ function ListingCard({ id, name, city, state, country, photoUrls }) {
     }
 
     return (
-        <View>
-            <Text>{name}</Text>
-            <Text>{city} {state}, {country}</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.location}>{city} {state}, {country}</Text>
             {photoUrls && 
                 <TouchableOpacity onPress={() => navigateToListing(id)}>
                     <Image
@@ -37,7 +37,19 @@ const styles = StyleSheet.create({
     image: {
         height: 225,
         width: 300,
-        marginBottom: 20,
+    },
+    container: {
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 20,
+        marginTop: 20,
+        fontFamily: 'HelveticaNeue-Light',
+    },
+    location: {
+        fontSize: 12,
+        color: 'darkgray',
+        marginBottom: 5,
     }
 })
 

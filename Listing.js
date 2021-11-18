@@ -27,11 +27,11 @@ function Listing({ navigation, route }) {
 
     return (
         <ScrollView key={id}>
-            {listing && <View >
-                <Text>{listing.name}</Text>
-                <Text>{listing.city}</Text>
-                <Text>${listing.price}</Text>
-                <Text>{listing.description}</Text>
+            {listing && <View style={styles.container}>
+                <Text style={styles.title}>{listing.name}</Text>
+                <Text style={styles.details}>{listing.city} {listing.state}, {listing.country}</Text>
+                <Text style={styles.details}>${listing.price}</Text>
+                <Text style={styles.description}>{listing.description}</Text>
                 {listing.photoUrls && listing.photoUrls.map(url =>
                     <Image 
                         source={{ uri: url }} 
@@ -49,6 +49,26 @@ const styles = StyleSheet.create({
         width: 300,
         marginBottom: 20,
     },
+    container: {
+        alignItems: 'center',
+    },
+    title: {
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 20,
+        fontFamily: 'HelveticaNeue-Light',
+    },
+    details: {
+        fontSize: 12,
+        color: 'gray',
+        marginBottom: 5,
+    },
+    description: {
+        fontSize: 12,
+        color: 'gray',
+        margin: 15,
+        marginBottom: 20,
+    }
 })
 
 export default Listing;

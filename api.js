@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+// const BASE_URL = 'http://vcheng33-sharebnb.herokuapp.com';
 
 /** A class for ShareBnb API */
 class ShareBnbApi {
@@ -65,7 +66,7 @@ class ShareBnbApi {
 
   static async getListingsDirectly() {
     try {
-      const result = await axios.get("http://localhost:3001/listings/");
+      const result = await axios.get(`${BASE_URL}/listings`);
       console.log("result:", result);
       return result.data.listings;
     } catch (err) {
@@ -94,24 +95,53 @@ class ShareBnbApi {
   */
   static async signUp(signUpData) {
     const result = await this.request(`auth/register`, signUpData, "post");
+    console.log({result});
     return result.token;
+  }
+
+  static async signUp(signUpData) {
+    const result = await axios.post(`${BASE_URL}/auth/register`, signUpData);
+    console.log(`${BASE_URL}/auth/register`);
+    console.log({ signUpData });
+    console.log("token", result.data.token);
+    return result.data.token;
   }
 
   /** Takes in data from the login form and returns a token if the inputs match
   *   the user's data
   */
+  // static async login(loginData) {
+  //   const result = await this.request(`auth/token`, loginData, "post");
+  //   return result.token;
+  // }
+
   static async login(loginData) {
-    const result = await this.request(`auth/token`, loginData, "post");
-    return result.token;
+    const result = await axios.post(`${BASE_URL}/auth/token`, loginData);
+    console.log(`${BASE_URL}/auth/token`);
+    console.log({loginData});
+    console.log("token", result.data.token);
+    return result.data.token;
   }
 
   /** Takes in a username and returns the user data if the username is found
   *   in the database
   */
+  // static async getCurrentUser(username) {
+  //   const result = await this.request(`users/${username}`);
+  //   return result.user;
+  // }
+
   static async getCurrentUser(username) {
-    const result = await this.request(`users/${username}`);
-    return result.user;
+    const result = await axios.get(
+      `${BASE_URL}/users/${username}`,
+      {headers: {
+        'Authorization': `Bearer ${ShareBnbApi.token}`
+      }}
+    );
+    console.log("user", result.data.user);
+    return result.data.user;
   }
+
 }
 
 export default ShareBnbApi;

@@ -14,7 +14,7 @@ import {
 import ShareBnbApi from './api';
 import ListingCard from './ListingCard';
 
-function Listings({ navigation }) {
+function Listings() {
     const [listings, setListings] = useState(null);
 
     /** Submits a search with no queries on first load to get all database
@@ -34,17 +34,17 @@ function Listings({ navigation }) {
         }
     }
 
-    function pushToListings() {
-        navigation.push("Listings");
-    }
+    // function pushToListings() {
+    //     navigation.push("Listings");
+    // }
 
-    function goBackToLastScreen() {
-        navigation.goBack();
-    }
+    // function goBackToLastScreen() {
+    //     navigation.goBack();
+    // }
 
-    function popToFirstScreen() {
-        navigation.popToTop();
-    }
+    // function popToFirstScreen() {
+    //     navigation.popToTop();
+    // }
 
     // function goToListing(id) {
     //     navigation.navigate('Listing', {id});
@@ -61,21 +61,8 @@ function Listings({ navigation }) {
                     country={l.country}
                     photoUrls={l.photoUrls}
                 />
-                // <View key={l.id}>
-                //         <Text>{l.name}</Text>
-                //         <TouchableOpacity onPress={() => goToListing(l.id)}>   
-                //             <Image 
-                //                 source={{ uri: l.photoUrls[0]}} 
-                //                 style={{
-                //                     width:250, 
-                //                     height: 150, 
-                //                     marginBottom:20,
-                //                 }}
-                //             />
-                //         </TouchableOpacity>
-                // </View>
             )}
-            <Button
+            {/* <Button
                 title="Go To Listings Page Again"
                 onPress={pushToListings}
             />
@@ -86,10 +73,8 @@ function Listings({ navigation }) {
             <Button
                 title="Go To First Page"
                 onPress={popToFirstScreen}
-            />
+            /> */}
         </ScrollView>
-
-
     );
 }
 
