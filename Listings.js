@@ -14,7 +14,7 @@ import {
 import ShareBnbApi from './api';
 import ListingCard from './ListingCard';
 
-function Listings() {
+function Listings({ navigation }) {
     const [listings, setListings] = useState(null);
 
     /** Submits a search with no queries on first load to get all database
@@ -32,6 +32,10 @@ function Listings() {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    function navigateToNewListingForm() {
+        navigation.navigate("AddListing");
     }
 
     // function pushToListings() {
@@ -62,6 +66,10 @@ function Listings() {
                     photoUrls={l.photoUrls}
                 />
             )}
+            <Button
+                title="Add New Listing"
+                onPress={navigateToNewListingForm}
+            />
             {/* <Button
                 title="Go To Listings Page Again"
                 onPress={pushToListings}

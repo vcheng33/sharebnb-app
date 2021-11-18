@@ -2,14 +2,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode'
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ShareBnbApi from './api';
 import UserContext from './UserContext';
 
 import Routes from "./Routes";
+import BottomTab from './BottomTab';
+import Homepage from './Homepage';
+import Listings from './Listings';
 
 const ASYNC_STORAGE_TOKEN_KEY = "token";
-
+const Tab = createBottomTabNavigator();
 
 function App() {
   const [needsInfo, setNeedsInfo] = useState(true);
@@ -29,13 +34,17 @@ function App() {
     async function getCurrentUser() {
       if (token) {
         try {
-          let { username } = jwt_decode(token);
+          try{ 
+            let { username } = jwt_decode(token);
+            ShareBnbApi.token = token;
+            let resultUser = await ShareBnbApi.getCurrentUser(username);
+            setCurrentUser(resultUser);
+            setNeedsRedirect(false);
+            setNeedsInfo(false);
+          } catch (err) {
+            console.log(err);
+          }
           // put the token on the Api class so it can use it to call the API.
-          ShareBnbApi.token = token;
-          let resultUser = await ShareBnbApi.getCurrentUser(username);
-          setCurrentUser(resultUser);
-          setNeedsRedirect(false);
-          setNeedsInfo(false);
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);
           setCurrentUser(null);
@@ -57,7 +66,7 @@ function App() {
       ShareBnbApi.token = token;
       setToken(token);
       setNeedsRedirect(true);
-      AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
+      // AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
     } catch (err) {
       console.log(err);
     }
@@ -69,12 +78,12 @@ function App() {
    *  needsRedirect state to true.
    */
   async function handleLogin(loginData) {
-    try { 
+    try {
       let token = await ShareBnbApi.login(loginData);
       ShareBnbApi.token = token;
       setToken(token);
       setNeedsRedirect(true);
-      AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
+      // AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
     } catch (err) {
       console.log(err);
     }
@@ -88,11 +97,11 @@ function App() {
   function handleLogout() {
     setCurrentUser(null);
     setToken(null);
-    AsyncStorage.removeItem(ASYNC_STORAGE_TOKEN_KEY);
+    // AsyncStorage.removeItem(ASYNC_STORAGE_TOKEN_KEY);
   }
 
   return (
-    <UserContext.Provider value={{currentUser, handleLogin, handleSignUp}}>
+    <UserContext.Provider value={{ currentUser, handleLogin, handleSignUp }}>
       <Routes />
     </UserContext.Provider>
   );

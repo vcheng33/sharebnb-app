@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
 import Homepage from './Homepage';
 import Listings from "./Listings";
 import Listing from "./Listing";
@@ -17,6 +18,7 @@ function Routes() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
+                <Stack.Group>
                 <Stack.Screen
                     name="Home"
                     component={Homepage}
@@ -66,6 +68,7 @@ function Routes() {
                     name="SignUp"
                     component={SignUpForm}
                 />
+                </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { Input } from 'reactstrap';
 import { Formik } from "formik";
 import {
     ScrollView,
@@ -10,14 +11,14 @@ import {
     Image,
     Keyboard,
     TouchableOpacity,
-    Touchable
+    Touchable,
 } from "react-native";
 
 import UserContext from "./UserContext";
 import ShareBnbApi from "./api";
 
 function NewListingForm({ navigation }) {
-    const { currentUser, handleSignUp } = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
     
     const INITIAL_NEW_LISTING_FORM = {
         name: "",
@@ -29,6 +30,7 @@ function NewListingForm({ navigation }) {
         photoUrls: "",
         price: 0,
         username: currentUser.username,
+        images: "",
     }
 
     const [images, setImages] = useState([]);
@@ -81,10 +83,14 @@ function NewListingForm({ navigation }) {
                         <View style={styles.title}>
                             <Text style={styles.titleFont}>Add a New Listing</Text>
                         </View>
-                        <TextInput
-                            placeholder="Username"
-                            value={props.values.username}
-                            onChangeText={props.handleChange('username')}
+                        <Input
+                            type="file"
+                            name="name"
+                            // value={props.values.images}
+                            onChange={(event) => {
+                                handlePhoto();
+                                setFieldValue("image", event.target.files)
+                            }}
                             style={styles.input}
                             onBlur={Keyboard.dismiss}
                             autoCapitalize='none'
