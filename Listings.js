@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 
 import ShareBnbApi from './api';
 import ListingCard from './ListingCard';
@@ -7,7 +7,7 @@ import SearchForm from './SearchForm';
 
 
 function Listings() {
-    const [listings, setListings] = useState(null);
+    const [listings, setListings] = useState([]);
 
     /** Submits a search with no queries on first load to get all database
      *  listings

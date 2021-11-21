@@ -12,7 +12,7 @@ const ASYNC_STORAGE_TOKEN_KEY = "token";
 function App() {
   const [needsInfo, setNeedsInfo] = useState(true);
   const [needsRedirect, setNeedsRedirect] = useState(false);
-  // const [token, setToken] = useState(AsyncStorage.getItem(ASYNC_STORAGE_TOKEN_KEY));
+  // const [token, setToken] = useState(AsyncStorage.getItem(ASYNC_STORAGE_TOKEN_KEY) || null);
    const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
