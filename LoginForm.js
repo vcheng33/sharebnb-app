@@ -32,7 +32,7 @@ function LoginForm({ navigation }) {
     return (
         <View style={styles.form}>
             <View style={styles.background}>
-                <Image source={require('./assets/bg.jpg')} resizeMode='cover' style={styles.backdrop} />
+                <Image source={require('./assets/login-bg.jpg')} resizeMode='cover' style={styles.backdrop} />
             </View>
             <Formik
                 initialValues={INITIAL_LOGIN_FORM}
@@ -45,7 +45,7 @@ function LoginForm({ navigation }) {
             >
             
             {(props) => (
-                <View>
+                <View style={styles.formBackground}>
                     <View style={styles.title}>
                         <Text style={styles.titleFont}>Login</Text>
                     </View>
@@ -66,10 +66,12 @@ function LoginForm({ navigation }) {
                     autoCapitalize='none'
                     secureTextEntry={true}
                     />
-                    <Button
-                        title="Submit"
+                    <TouchableOpacity
                         onPress={props.handleSubmit}
-                    />
+                        style={styles.button}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+
                 </View>
             )}
             </Formik >
@@ -81,8 +83,8 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         margin: 12,
-        marginLeft: 20,
-        marginRight: 20,
+        marginLeft: 30,
+        marginRight: 30,
         borderWidth: 1,
         padding: 10,
         borderRadius: 10,
@@ -94,9 +96,11 @@ const styles = StyleSheet.create({
     },
     title: {
         alignItems: 'center',
+        marginTop: 20,
     },
     titleFont: {
         fontSize: 30,
+        color: 'white',
     },
     background: {
         position: 'absolute',
@@ -111,18 +115,32 @@ const styles = StyleSheet.create({
         width: 400,
         height: 400,
     },
-    saveButton: {
+    button: {
         // borderWidth: 1,
         // borderColor: '#007BFF',
         // backgroundColor: '#007BFF',
         // padding: 15,
-        margin: 5
+        // backgroundColor: 'rgba(263,263,263,0.2)',
+        margin: 12,
+        marginBottom: 20,
     },
-    saveButtonText: {
+    buttonText: {
         color: '#FFFFFF',
         fontSize: 20,
-        textAlign: 'center'
-    }
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    formBackground: {
+        backgroundColor: 'rgba(263,263,263,0.2)',
+        marginLeft: 40,
+        marginRight: 40,
+    },
+
 });
 
 export default LoginForm;
+
+{/* <Button
+    title="Submit"
+    onPress={props.handleSubmit}
+/> */}

@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     logo: {
         padding: 20,
         backgroundColor: 'rgba(263,263,263,0.2)',
-        width: 275,
-        height: 165,
+        width: 320,
+        height: 200,
         borderRadius: 5,
     },
 })

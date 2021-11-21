@@ -1,25 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode'
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ShareBnbApi from './api';
 import UserContext from './UserContext';
 
 import Routes from "./Routes";
-import BottomTab from './BottomTab';
-import Homepage from './Homepage';
-import Listings from './Listings';
 
 const ASYNC_STORAGE_TOKEN_KEY = "token";
-const Tab = createBottomTabNavigator();
 
 function App() {
   const [needsInfo, setNeedsInfo] = useState(true);
   const [needsRedirect, setNeedsRedirect] = useState(false);
-  const [token, setToken] = useState(AsyncStorage.getItem(ASYNC_STORAGE_TOKEN_KEY));
+  // const [token, setToken] = useState(AsyncStorage.getItem(ASYNC_STORAGE_TOKEN_KEY));
+   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
   console.debug(
@@ -66,7 +60,7 @@ function App() {
       ShareBnbApi.token = token;
       setToken(token);
       setNeedsRedirect(true);
-      // AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
+      // await AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
     } catch (err) {
       console.log(err);
     }
@@ -83,7 +77,7 @@ function App() {
       ShareBnbApi.token = token;
       setToken(token);
       setNeedsRedirect(true);
-      // AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
+      // await AsyncStorage.setItem(ASYNC_STORAGE_TOKEN_KEY, token);
     } catch (err) {
       console.log(err);
     }
@@ -101,7 +95,13 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{ currentUser, handleLogin, handleSignUp }}>
+    <UserContext.Provider 
+      value={{ 
+        currentUser, 
+        handleLogin, 
+        handleSignUp, 
+        handleLogout 
+      }}>
       <Routes />
     </UserContext.Provider>
   );

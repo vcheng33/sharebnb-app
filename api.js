@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
-// const BASE_URL = 'http://vcheng33-sharebnb.herokuapp.com';
+// const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = 'https://vcheng33-sharebnb.herokuapp.com';
 
 /** A class for ShareBnb API */
 class ShareBnbApi {
   static token;
-    // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjc2MjM2NX0.TWKf5lof0bx6tB0p16GNPYPckudYaGoGbiryam1T9ns';
+
   /** A function to send requests to the server */
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
@@ -40,10 +40,8 @@ class ShareBnbApi {
   //   const result = await this.request(`listings/${id}`)
   //   return result.listing;
   // }
-
   static async getListing(id) {
     const result = await axios.get(`${BASE_URL}/listings/${id}`);
-    console.log("getListing", result.data.listing);
     return result.data.listing;
   }
 
@@ -55,19 +53,16 @@ class ShareBnbApi {
   */
   static async getListings(searchTermData) {
     try {
-      console.log("inside getListings");
       const result = await this.request(`listings/`, searchTermData)
-      console.log({result});
       return result.listings;
     } catch (err) {
       console.log(err);
     }
   }
 
-  static async getListingsDirectly() {
+  static async getListingsDirectly(searchTermData) {
     try {
-      const result = await axios.get(`${BASE_URL}/listings`);
-      console.log("result:", result);
+      const result = await axios.get(`${BASE_URL}/listings`, { params: searchTermData});
       return result.data.listings;
     } catch (err) {
       console.log(err);
@@ -85,6 +80,7 @@ class ShareBnbApi {
     return result;
   }
 
+  /** Deletes a listing */
   static async deleteListing(id) {
     const currentListing = await this.getListing(id);
     const result = await this.request(`listings/${id}`, { data: currentListing.username }, "delete");
@@ -93,11 +89,11 @@ class ShareBnbApi {
 
   /** Takes in data about a new user and returns a token 
   */
-  static async signUp(signUpData) {
-    const result = await this.request(`auth/register`, signUpData, "post");
-    console.log({result});
-    return result.token;
-  }
+  // static async signUp(signUpData) {
+  //   const result = await this.request(`auth/register`, signUpData, "post");
+  //   console.log({result});
+  //   return result.token;
+  // }
 
   static async signUp(signUpData) {
     const result = await axios.post(`${BASE_URL}/auth/register`, signUpData);
@@ -114,12 +110,9 @@ class ShareBnbApi {
   //   const result = await this.request(`auth/token`, loginData, "post");
   //   return result.token;
   // }
-
   static async login(loginData) {
     const result = await axios.post(`${BASE_URL}/auth/token`, loginData);
-    console.log(`${BASE_URL}/auth/token`);
-    console.log({loginData});
-    console.log("token", result.data.token);
+    console.log("token:", result.data.token);
     return result.data.token;
   }
 
@@ -130,7 +123,6 @@ class ShareBnbApi {
   //   const result = await this.request(`users/${username}`);
   //   return result.user;
   // }
-
   static async getCurrentUser(username) {
     const result = await axios.get(
       `${BASE_URL}/users/${username}`,
@@ -138,7 +130,6 @@ class ShareBnbApi {
         'Authorization': `Bearer ${ShareBnbApi.token}`
       }}
     );
-    console.log("user", result.data.user);
     return result.data.user;
   }
 
